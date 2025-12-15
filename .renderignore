@@ -1,0 +1,50 @@
+# Render ignore file - excludes files from deployment builds
+
+# Test files
+**/*_test.go
+**/test_helpers.go
+
+# Test artifacts
+/tmp/
+*.test
+*.out
+
+# Build artifacts
+api/bin/
+api/server
+web/node_modules/
+web/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed for runtime)
+*.md
+!README.md
+
+# Audit reports
+AUDIT_REPORT.md
+AUDIT_SUMMARY.md
+API_DESIGN_RECOMMENDATIONS.md
+XML_ANALYSIS_REPORT.md
+
+# Git files
+.git/
+.gitignore
+
+# CI/CD (not needed for deployment)
+.github/
+

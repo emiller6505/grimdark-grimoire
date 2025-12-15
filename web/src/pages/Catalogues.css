@@ -1,0 +1,58 @@
+.catalogues h1 {
+  margin-bottom: 2rem;
+}
+
+.catalogues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.catalogue-card {
+  padding: 1.5rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.catalogue-card:hover {
+  transform: translateY(-4px);
+  border-color: #646cff;
+}
+
+.catalogue-card h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.catalogue-revision {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.library-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #646cff;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error {
+  color: #ff6b6b;
+}
+

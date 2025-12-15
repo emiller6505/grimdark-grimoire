@@ -1,0 +1,146 @@
+.unit-detail {
+  max-width: 900px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #646cff;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.unit-detail h1 {
+  margin-bottom: 2rem;
+}
+
+.unit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-section,
+.abilities-section,
+.weapons-section,
+.costs-section {
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.profile-section h2,
+.abilities-section h2,
+.weapons-section h2,
+.costs-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.ability {
+  margin-bottom: 1.5rem;
+}
+
+.ability:last-child {
+  margin-bottom: 0;
+}
+
+.ability h3 {
+  margin: 0 0 0.5rem 0;
+  color: #646cff;
+}
+
+.ability p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.weapons-section h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.weapons-section h3:first-of-type {
+  margin-top: 0;
+}
+
+.weapons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.weapon {
+  padding: 1rem;
+  background-color: #242424;
+  border-radius: 4px;
+}
+
+.weapon h4 {
+  margin: 0 0 0.5rem 0;
+}
+
+.weapon-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.costs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.cost {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cost-type {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cost-value {
+  font-weight: 600;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error {
+  color: #ff6b6b;
+}
+

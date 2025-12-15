@@ -1,0 +1,34 @@
+services:
+  # Backend API
+  - type: web
+    name: grimoire-api
+    env: go
+    region: oregon
+    plan: starter
+    rootDir: api
+    buildCommand: go build -o server ./cmd/server
+    startCommand: ./server
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DATA_DIR
+        value: ../wh40k-10e
+      - key: GIN_MODE
+        value: release
+    healthCheckPath: /health
+
+  # Frontend
+  - type: web
+    name: grimoire-web
+    env: static
+    region: oregon
+    plan: starter
+    rootDir: web
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        # Update this with your actual API URL after deployment
+        # Format: https://grimoire-api.onrender.com/api/v1
+        value: https://grimoire-api.onrender.com/api/v1
+
