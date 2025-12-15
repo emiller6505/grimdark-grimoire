@@ -121,6 +121,8 @@ func (lr *LinkResolver) MergeEntryLinkWithSelectionEntry(entryLink *models.Entry
 	}
 
 	// Merge modifiers
+	// Modifiers from entryLink are appended to modifiers from selectionEntry
+	// This allows entryLinks to add additional modifiers while preserving original ones
 	if len(entryLink.Modifiers) > 0 {
 		merged.Modifiers = append(merged.Modifiers, entryLink.Modifiers...)
 	}

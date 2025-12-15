@@ -1,47 +1,39 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { apiClient, Faction } from '../utils/api'
 import './Factions.css'
 
 function Factions() {
-  const [factions, setFactions] = useState<Faction[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    loadFactions()
-  }, [])
-
-  const loadFactions = async () => {
-    try {
-      setLoading(true)
-      const response = await apiClient.listFactions()
-      setFactions(response.data.data || [])
-      setError(null)
-    } catch (err: any) {
-      setError(err.message || 'Failed to load factions')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (loading) return <div className="loading">Loading factions...</div>
-  if (error) return <div className="error">Error: {error}</div>
+  const categories = [
+    {
+      name: 'Xenos',
+      description: 'Alien races and non-human factions',
+      color: '#8B5CF6',
+    },
+    {
+      name: 'Imperium',
+      description: 'Human factions loyal to the Emperor',
+      color: '#3B82F6',
+    },
+    {
+      name: 'Chaos',
+      description: 'Forces of the Dark Gods',
+      color: '#EF4444',
+    },
+  ]
 
   return (
     <div className="factions">
       <h1>Factions</h1>
+      <p className="factions-intro">Select a category to browse factions</p>
       <div className="factions-grid">
-        {factions.map((faction) => (
+        {categories.map((category) => (
           <Link
-            key={faction.name}
-            to={`/factions/${faction.name}/units`}
-            className="faction-card"
+            key={category.name}
+            to={`/factions/${category.name.toLowerCase()}`}
+            className="faction-card category-card"
+            style={{ '--category-color': category.color } as React.CSSProperties}
           >
-            <h3>{faction.name}</h3>
-            <p className="catalogue-count">
-              {faction.catalogues.length} catalogue{faction.catalogues.length !== 1 ? 's' : ''}
-            </p>
+            <h3>{category.name}</h3>
+            <p className="category-description">{category.description}</p>
           </Link>
         ))}
       </div>

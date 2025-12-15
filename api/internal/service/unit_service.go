@@ -87,10 +87,12 @@ func (s *UnitService) ListUnits(faction, category, search string, limit, offset 
 		for _, entryLink := range catalogue.EntryLinks {
 			if entryLink.Type == "selectionEntry" {
 				// Try to resolve the entry
-				entry, err := s.resolver.ResolveEntryLink(&entryLink, catalogue.ID)
+				resolvedEntry, err := s.resolver.ResolveEntryLink(&entryLink, catalogue.ID)
 				if err != nil {
 					continue
 				}
+				// Merge entryLink overrides with resolved entry (preserves modifiers)
+				entry := s.resolver.MergeEntryLinkWithSelectionEntry(&entryLink, resolvedEntry)
 
 				// Apply filters
 				if faction != "" {
@@ -125,12 +127,16 @@ func (s *UnitService) ListUnits(faction, category, search string, limit, offset 
 					}
 				}
 
+				// Transform the full unit to get tiered costs
+				fullUnit := s.transformer.TransformUnit(entry, catalogue.ID)
+				
 				summary := models.UnitSummary{
-					ID:       entryLink.ID,
-					Name:     entry.Name,
-					TargetID: entryLink.TargetID,
-					Type:     entry.Type,
-					Costs:    s.transformer.TransformCosts(entry.Costs),
+					ID:          entryLink.ID,
+					Name:        entry.Name,
+					TargetID:    entryLink.TargetID,
+					Type:        entry.Type,
+					Costs:       s.transformer.TransformCosts(entry.Costs),
+					TieredCosts: fullUnit.TieredCosts,
 				}
 				allUnits = append(allUnits, summary)
 			}
@@ -165,10 +171,12 @@ func (s *UnitService) SearchUnits(query string, limit int) ([]models.SearchResul
 	for _, catalogue := range s.parser.GetAllCatalogues() {
 		for _, entryLink := range catalogue.EntryLinks {
 			if entryLink.Type == "selectionEntry" {
-				entry, err := s.resolver.ResolveEntryLink(&entryLink, catalogue.ID)
+				resolvedEntry, err := s.resolver.ResolveEntryLink(&entryLink, catalogue.ID)
 				if err != nil {
 					continue
 				}
+				// Merge entryLink overrides with resolved entry (preserves modifiers)
+				entry := s.resolver.MergeEntryLinkWithSelectionEntry(&entryLink, resolvedEntry)
 
 				if strings.Contains(strings.ToLower(entry.Name), query) {
 					results = append(results, models.SearchResult{

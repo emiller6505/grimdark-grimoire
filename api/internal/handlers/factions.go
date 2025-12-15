@@ -85,3 +85,4 @@ func extractFactionFromName(name string) string {
 	return name
 }
 
+

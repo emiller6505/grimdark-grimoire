@@ -72,3 +72,4 @@ func (h *GameSystemHandler) GetGameSystem(c *gin.Context) {
 	response.Success(c, responseData)
 }
 
+

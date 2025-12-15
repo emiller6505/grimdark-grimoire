@@ -81,3 +81,4 @@ func (h *UnitHandler) GetUnitWeapons(c *gin.Context) {
 	response.Success(c, weapons)
 }
 
+

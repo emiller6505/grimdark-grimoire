@@ -26,9 +26,6 @@ function Layout({ children }: LayoutProps) {
             <Link to="/units" className={isActive('/units') ? 'active' : ''}>
               Units
             </Link>
-            <Link to="/catalogues" className={isActive('/catalogues') ? 'active' : ''}>
-              Catalogues
-            </Link>
             <Link to="/factions" className={isActive('/factions') ? 'active' : ''}>
               Factions
             </Link>

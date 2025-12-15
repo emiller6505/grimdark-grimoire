@@ -1,0 +1,86 @@
+.faction-category {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--accent-gold);
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.faction-category h1 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--accent-gold);
+}
+
+.no-factions {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 3rem;
+}
+
+.factions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: 1rem;
+}
+
+.faction-card {
+  padding: var(--spacing-lg);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.faction-card.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faction-card:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.faction-card h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-gold);
+  font-size: 1.25rem;
+}
+
+.unit-count {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+

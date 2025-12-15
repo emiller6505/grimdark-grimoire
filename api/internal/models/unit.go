@@ -135,3 +135,4 @@ type InfoLink struct {
 	Hidden  string   `xml:"hidden,attr"`
 }
 
+

@@ -24,3 +24,4 @@ type Characteristic struct {
 	Value   string   `xml:",chardata"`
 }
 
+

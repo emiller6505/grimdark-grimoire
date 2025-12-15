@@ -6,7 +6,6 @@ import './UnitDetail.css'
 function UnitDetail() {
   const { id } = useParams<{ id: string }>()
   const [unit, setUnit] = useState<Unit | null>(null)
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -17,18 +16,14 @@ function UnitDetail() {
 
   const loadUnit = async (unitId: string) => {
     try {
-      setLoading(true)
       const response = await apiClient.getUnit(unitId)
       setUnit(response.data.data)
       setError(null)
     } catch (err: any) {
       setError(err.message || 'Failed to load unit')
-    } finally {
-      setLoading(false)
     }
   }
 
-  if (loading) return <div className="loading">Loading unit...</div>
   if (error) return <div className="error">Error: {error}</div>
   if (!unit) return <div>Unit not found</div>
 
@@ -124,16 +119,31 @@ function UnitDetail() {
           </section>
         )}
 
-        {unit.costs && (
+        {(unit.tieredCosts || (unit.costs && unit.costs.pts !== undefined)) && (
           <section className="costs-section">
             <h2>Costs</h2>
             <div className="costs-list">
-              {Object.entries(unit.costs).map(([type, cost]) => (
-                <div key={type} className="cost">
-                  <span className="cost-type">{type}:</span>
-                  <span className="cost-value">{cost}</span>
+              {unit.tieredCosts ? (
+                <>
+                  <div className="cost">
+                    <span className="cost-type">
+                      Base {unit.tieredCosts.tiers.length > 0 ? `(1-${unit.tieredCosts.tiers[0].minModels - 1} models)` : '(1+ models)'}:
+                    </span>
+                    <span className="cost-value">{unit.tieredCosts.baseCost} pts</span>
+                  </div>
+                  {unit.tieredCosts.tiers.map((tier, index) => (
+                    <div key={index} className="cost">
+                      <span className="cost-type">{tier.minModels}+ models:</span>
+                      <span className="cost-value">{tier.cost} pts</span>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="cost">
+                  <span className="cost-type">Points:</span>
+                  <span className="cost-value">{unit.costs?.pts}</span>
                 </div>
-              ))}
+              )}
             </div>
           </section>
         )}

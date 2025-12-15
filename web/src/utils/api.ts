@@ -9,6 +9,16 @@ const api = axios.create({
   },
 })
 
+export interface CostTier {
+  minModels: number
+  cost: number
+}
+
+export interface TieredCosts {
+  baseCost: number
+  tiers: CostTier[]
+}
+
 export interface Unit {
   id: string
   name: string
@@ -37,6 +47,7 @@ export interface Unit {
     primary: boolean
   }>
   costs?: Record<string, number>
+  tieredCosts?: TieredCosts
 }
 
 export interface Catalogue {

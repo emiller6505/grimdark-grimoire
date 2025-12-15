@@ -73,6 +73,9 @@ func (t *Transformer) TransformUnit(entry *models.SelectionEntry, catalogueID st
 	// Transform costs
 	response.Costs = t.TransformCosts(entry.Costs)
 
+	// Transform tiered costs (parse modifiers for model-count-based cost adjustments)
+	response.TieredCosts = t.transformTieredCosts(entry.Costs, entry.Modifiers, entry.ModifierGroups, entry.ID)
+
 	// Transform constraints
 	response.Constraints = t.transformConstraints(entry.Constraints)
 
@@ -810,6 +813,108 @@ func (t *Transformer) TransformCosts(costs []models.Cost) map[string]int {
 		// Note: Silently ignore parse errors - some costs might be non-numeric (e.g., "Variable")
 	}
 	return costMap
+}
+
+// transformTieredCosts parses modifiers to extract tiered costs based on model count
+// The pts cost typeId is "51b2-306e-1021-d207"
+func (t *Transformer) transformTieredCosts(costs []models.Cost, modifiers []models.Modifier, modifierGroups []models.ModifierGroup, entryID string) *models.TieredCosts {
+	const ptsTypeID = "51b2-306e-1021-d207"
+	
+	// Find base pts cost
+	var baseCost int
+	for _, cost := range costs {
+		if cost.TypeID == ptsTypeID && cost.Name == "pts" {
+			if value, err := strconv.Atoi(cost.Value); err == nil {
+				baseCost = value
+				break
+			}
+		}
+	}
+	
+	if baseCost == 0 {
+		return nil // No base cost found
+	}
+	
+	// Collect all modifiers (from both direct modifiers and modifier groups)
+	allModifiers := make([]models.Modifier, 0)
+	allModifiers = append(allModifiers, modifiers...)
+	for _, group := range modifierGroups {
+		allModifiers = append(allModifiers, group.Modifiers...)
+	}
+	
+	// Parse modifiers that affect pts cost based on model count
+	tiers := make([]models.CostTier, 0)
+	
+	for _, modifier := range allModifiers {
+		// Only process modifiers that set the pts cost field
+		if modifier.Type != "set" || modifier.Field != ptsTypeID {
+			continue
+		}
+		
+		// Parse the cost value
+		costValue, err := strconv.Atoi(modifier.Value)
+		if err != nil {
+			continue
+		}
+		
+		// Check conditions for model count
+		// Conditions can check selections with childId="model" or a specific entry ID
+		// We're looking for conditions that check the number of models/units selected
+		processCondition := func(condition models.Condition, entryID string) {
+			// Look for conditions that check model count
+			// Field "selections" with childId="model" means counting models
+			// Common condition types: "atLeast", "greaterThan", "equalTo"
+			if condition.Field == "selections" && condition.ChildID == "model" {
+				// If childId is "model", it's definitely counting models
+				// Accept any scope - "self", empty, or unit ID
+				threshold := parseInt(condition.Value)
+				if threshold > 0 {
+					// For "greaterThan", the tier starts at threshold+1
+					// For "atLeast", the tier starts at threshold
+					minModels := threshold
+					if condition.Type == "greaterThan" {
+						minModels = threshold + 1
+					}
+					
+					tiers = append(tiers, models.CostTier{
+						MinModels: minModels,
+						Cost:      costValue,
+					})
+				}
+			}
+		}
+		
+		// Process direct conditions
+		for _, condition := range modifier.Conditions {
+			processCondition(condition, entryID)
+		}
+		
+		// Also check condition groups
+		for _, condGroup := range modifier.ConditionGroups {
+			for _, condition := range condGroup.Conditions {
+				processCondition(condition, entryID)
+			}
+		}
+	}
+	
+	// If no tiers found, return nil (unit has flat cost)
+	if len(tiers) == 0 {
+		return nil
+	}
+	
+	// Sort tiers by minModels (ascending)
+	for i := 0; i < len(tiers)-1; i++ {
+		for j := i + 1; j < len(tiers); j++ {
+			if tiers[i].MinModels > tiers[j].MinModels {
+				tiers[i], tiers[j] = tiers[j], tiers[i]
+			}
+		}
+	}
+	
+	return &models.TieredCosts{
+		BaseCost: baseCost,
+		Tiers:    tiers,
+	}
 }
 
 // transformConstraints extracts constraint information

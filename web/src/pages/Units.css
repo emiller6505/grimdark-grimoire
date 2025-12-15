@@ -52,6 +52,22 @@
   transition: all 0.3s ease;
 }
 
+.unit-card.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .unit-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-gold);
@@ -93,6 +109,13 @@
   color: var(--accent-red);
   background-color: rgba(220, 38, 38, 0.1);
   border-color: var(--accent-red);
+}
+
+.no-units {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 3rem;
 }
 
 /* Mobile responsiveness */

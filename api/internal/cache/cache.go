@@ -73,3 +73,4 @@ func (c *Cache) ClearCatalogue(id string) {
 	delete(c.catalogues, id)
 }
 
+

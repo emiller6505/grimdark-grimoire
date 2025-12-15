@@ -13,6 +13,7 @@ type UnitResponse struct {
 	Categories  []CategoryInfo         `json:"categories"`
 	Rules       []RuleInfo             `json:"rules"`
 	Costs       map[string]int         `json:"costs"`
+	TieredCosts *TieredCosts           `json:"tieredCosts,omitempty"`
 	Constraints *UnitConstraints       `json:"constraints,omitempty"`
 	Faction     *FactionInfo          `json:"faction,omitempty"`
 	Catalogue   *CatalogueInfo        `json:"catalogue,omitempty"`
@@ -65,6 +66,18 @@ type RuleInfo struct {
 	Name string `json:"name"`
 }
 
+// TieredCosts represents costs that vary based on model count
+type TieredCosts struct {
+	BaseCost int          `json:"baseCost"` // Base cost (minimum model count)
+	Tiers    []CostTier   `json:"tiers"`    // Cost tiers based on model count
+}
+
+// CostTier represents a cost tier
+type CostTier struct {
+	MinModels int `json:"minModels"` // Minimum number of models for this tier
+	Cost      int `json:"cost"`      // Cost at this tier
+}
+
 // UnitConstraints represents unit selection constraints
 type UnitConstraints struct {
 	MaxPerRoster int `json:"maxPerRoster,omitempty"`
@@ -110,11 +123,12 @@ type CatalogueResponse struct {
 
 // UnitSummary represents a summary of a unit (for lists)
 type UnitSummary struct {
-	ID       string         `json:"id"`
-	Name     string         `json:"name"`
-	TargetID string         `json:"targetId,omitempty"`
-	Costs    map[string]int `json:"costs"`
-	Type     string         `json:"type,omitempty"`
+	ID          string       `json:"id"`
+	Name        string       `json:"name"`
+	TargetID    string       `json:"targetId,omitempty"`
+	Costs       map[string]int `json:"costs"`
+	TieredCosts *TieredCosts `json:"tieredCosts,omitempty"`
+	Type        string       `json:"type,omitempty"`
 }
 
 // GameSystemResponse represents game system information
@@ -165,4 +179,5 @@ type SearchResult struct {
 	Name     string `json:"name"`
 	Summary  string `json:"summary,omitempty"`
 }
+
 
