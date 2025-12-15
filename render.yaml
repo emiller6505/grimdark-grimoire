@@ -6,7 +6,7 @@ services:
     region: oregon
     plan: starter
     rootDir: api
-    buildCommand: go build -o server ./cmd/server
+    buildCommand: git submodule update --init --recursive && go build -o server ./cmd/server
     startCommand: ./server
     envVars:
       - key: PORT
