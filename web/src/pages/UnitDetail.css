@@ -1,36 +1,41 @@
 .unit-detail {
   max-width: 900px;
+  margin: 0 auto;
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 1rem;
-  color: #646cff;
+  margin-bottom: var(--spacing-lg);
+  color: var(--accent-blue);
   text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .back-link:hover {
+  color: var(--accent-gold);
   text-decoration: underline;
 }
 
 .unit-detail h1 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
+  color: var(--accent-gold);
 }
 
 .unit-info {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--spacing-xl);
 }
 
 .profile-section,
 .abilities-section,
 .weapons-section,
 .costs-section {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background-color: var(--bg-secondary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
 }
 
 .profile-section h2,
@@ -38,53 +43,83 @@
 .weapons-section h2,
 .costs-section h2 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
+  color: var(--accent-gold);
+  font-size: 1.5rem;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .profile-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacing-xs);
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.profile-stat:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
 }
 
 .stat-label {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .stat-value {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-gold);
 }
 
 .ability {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg);
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
 }
 
 .ability:last-child {
   margin-bottom: 0;
 }
 
+.ability:hover {
+  border-color: var(--accent-gold);
+}
+
 .ability h3 {
-  margin: 0 0 0.5rem 0;
-  color: #646cff;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-gold);
+  font-size: 1.125rem;
 }
 
 .ability p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-primary);
   line-height: 1.6;
 }
 
 .weapons-section h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--accent-blue);
+  font-size: 1.125rem;
 }
 
 .weapons-section h3:first-of-type {
@@ -94,53 +129,97 @@
 .weapons-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .weapon {
-  padding: 1rem;
-  background-color: #242424;
-  border-radius: 4px;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.weapon:hover {
+  border-color: var(--accent-blue);
 }
 
 .weapon h4 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-gold);
 }
 
 .weapon-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  gap: var(--spacing-md);
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .costs-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: var(--spacing-xl);
 }
 
 .cost {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
+  align-items: center;
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
 }
 
 .cost-type {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
 }
 
 .cost-value {
   font-weight: 600;
+  color: var(--accent-gold);
+  font-size: 1.125rem;
 }
 
 .loading,
 .error {
   text-align: center;
-  padding: 2rem;
+  padding: var(--spacing-2xl);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.loading {
+  color: var(--text-secondary);
 }
 
 .error {
-  color: #ff6b6b;
+  color: var(--accent-red);
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--accent-red);
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .unit-detail {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .profile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .costs-list {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

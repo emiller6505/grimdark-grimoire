@@ -1,34 +1,43 @@
+.factions {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .factions h1 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  color: var(--accent-gold);
 }
 
 .factions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
 }
 
 .faction-card {
-  padding: 1.5rem;
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .faction-card:hover {
   transform: translateY(-4px);
-  border-color: #646cff;
+  border-color: var(--accent-gold);
+  box-shadow: var(--shadow-lg);
 }
 
 .faction-card h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-gold);
 }
 
 .catalogue-count {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -36,10 +45,25 @@
 .loading,
 .error {
   text-align: center;
-  padding: 2rem;
+  padding: var(--spacing-2xl);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.loading {
+  color: var(--text-secondary);
 }
 
 .error {
-  color: #ff6b6b;
+  color: var(--accent-red);
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: var(--accent-red);
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .factions-grid {
+    grid-template-columns: 1fr;
+  }
+}
